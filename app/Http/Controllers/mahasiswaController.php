@@ -20,6 +20,7 @@ class mahasiswaController extends Controller
                 ->orWhere('nama', 'like', "%$katakunci%")
                 ->orWhere('jurusan', 'like', "%$katakunci%")
                  ->orWhere('kelas', 'like', "%$katakunci%")
+                 ->orWhere('umur', 'like', "%$katakunci%")
                 ->paginate($jumlahbaris);
         } else {
             $data = mahasiswa::orderBy('nim', 'desc')->paginate($jumlahbaris);
@@ -44,12 +45,14 @@ class mahasiswaController extends Controller
         Session::flash('nama', $request->nama);
         Session::flash('jurusan', $request->jurusan);
         Session::flash('kelas', $request->kelas);
+        Session::flash('umur', $request->umur);
 
         $request->validate([
             'nim' => 'required|numeric|unique:mahasiswa,nim',
             'nama' => 'required',
             'jurusan' => 'required',
              'kelas' => 'required',
+             'umur' => 'required|numeric',
         ], [
             'nim.required' => 'NIM wajib diisi',
             'nim.numeric' => 'NIM wajib dalam angka',
@@ -57,12 +60,15 @@ class mahasiswaController extends Controller
             'nama.required' => 'Nama wajib diisi',
             'jurusan.required' => 'Jurusan wajib diisi',
             'kelas.required' => 'kelas wajib diisi',
+            'umur.required' => 'Umur wajib diisi',
+            'umur.numeric' => 'Umur wajib dalam angka',
         ]);
         $data = [
             'nim' => $request->nim,
             'nama' => $request->nama,
             'jurusan' => $request->jurusan,
             'kelas' => $request->kelas,
+            'umur' => $request->umur,
         ];
         mahasiswa::create($data);
         return redirect()->to('mahasiswa')->with('success', 'Berhasil menambahkan data');
@@ -94,15 +100,19 @@ class mahasiswaController extends Controller
             'nama' => 'required',
             'jurusan' => 'required',
             'kelas' => 'required',
+            'umur' => 'required|numeric',
         ], [
             'nama.required' => 'Nama wajib diisi',
             'jurusan.required' => 'Jurusan wajib diisi',
              'kelas.required' => 'kelas wajib diisi',
+            'umur.required' => 'Umur wajib diisi',
+            'umur.numeric' => 'Umur wajib dalam angka',
         ]);
         $data = [
             'nama' => $request->nama,
             'jurusan' => $request->jurusan,
             'kelas' => $request->kelas,
+            'umur' => $request->umur,
         ];
         mahasiswa::where('nim', $id)->update($data);
         return redirect()->to('mahasiswa')->with('success', 'Berhasil melakukan update data');

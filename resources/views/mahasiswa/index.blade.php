@@ -23,6 +23,7 @@
                 <th class="col-md-4">Nama</th>
                 <th class="col-md-2">Jurusan</th>
                  <th class="col-md-2">kelas</th>
+                 <th class="col-md-2">Umur</th>
                 <th class="col-md-2">Aksi</th>
             </tr>
         </thead>
@@ -35,6 +36,7 @@
                 <td>{{ $item->nama }}</td>
                 <td>{{ $item->jurusan }}</td>
                  <td>{{ $item->kelas }}</td>
+                 <td>{{ $item->umur }}</td>
                 <td>
                     <a href='{{ url('mahasiswa/'.$item->nim.'/edit') }}' class="btn btn-warning btn-sm">Edit</a>
                     <form onsubmit="return confirm('Yakin akan menghapus data?')" class='d-inline' action="{{ url('mahasiswa/'.$item->nim) }}" method="post">
